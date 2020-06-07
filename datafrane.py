@@ -28,5 +28,5 @@ class Dataframe():
         return df
 
     nuevoDataset = filtrar_dataset(df)
-    print('\nNuevo Dataset mostrandose :D')
+    #print('\nNuevo Dataset mostrandose :D')
     print(nuevoDataset)
