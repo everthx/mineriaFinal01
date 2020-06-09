@@ -5,7 +5,7 @@ class Dataframe():
     pd.set_option('display.max_columns', 50)
     df = pd.read_csv('01_POBLACION_01_BC.csv', encoding="ISO-8859-1")
 
-    #mod
+    #mod 123
     def filtrar_dataset(df):
         df = df.rename( columns = { 'INEGI. Tabulados de la Encuesta Intercensal 2015': 'Estado'
             ,'Unnamed: 1': 'Dimension', 'Unnamed: 2': 'Edades', 'Unnamed: 3': 'Estimador', 'Unnamed: 4': 'Poblacion Total'
