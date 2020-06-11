@@ -28,6 +28,9 @@ class Dataframe():
         #df['Total 2'] = df.iloc[:, 5:7].sum(axis=1)
         return df
 
+    def filtrarCiudades(df):
+
+
     nuevoDataset = filtrar_dataset(df)
     #print('\nNuevo Dataset mostrandose :D')
     print(nuevoDataset)
