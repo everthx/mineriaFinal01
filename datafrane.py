@@ -43,8 +43,5 @@ class Dataframe():
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrarCiudades(nuevoDataset)
 
-
-
-
     #print('\nNuevo Dataset mostrandose :D')
     #print(nuevoDataset.head(500))
