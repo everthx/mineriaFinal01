@@ -29,6 +29,7 @@ class Dataframe():
         return df
 
     def filtrarCiudades(df):
+        print('Hello dude')
 
 
     nuevoDataset = filtrar_dataset(df)
