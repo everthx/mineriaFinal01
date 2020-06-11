@@ -42,5 +42,8 @@ class Dataframe():
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrarCiudades(nuevoDataset)
 
+    #test = nuevoDataset.groupby('Dimension').describe()
+    #test.to_csv('purbas.csv')
     #print('\nNuevo Dataset mostrandose :D')
-    print(nuevoDataset)
+    print(nuevoDataset.groupby('Dimension').max())
+    #print(nuevoDataset.chunksize())
