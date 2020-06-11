@@ -39,7 +39,6 @@ class Dataframe():
         df = pd.read_csv('poblacion_ciudades.csv')
         return df
 
-
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrarCiudades(nuevoDataset)
 
