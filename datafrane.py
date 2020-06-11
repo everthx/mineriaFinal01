@@ -29,9 +29,22 @@ class Dataframe():
         return df
 
     def filtrarCiudades(df):
-        print('Hello team red')
+        # Designar ciudades por su rando de habitantes
+        df['Dimension'] = df['Dimension'].str.replace('Menos de 2 500 habitantes', 'Rosarito')
+        df['Dimension'] = df['Dimension'].str.replace('2 500-14 999 habitantes', 'Tecate')
+        df['Dimension'] = df['Dimension'].str.replace('15 000-49 999 habitantes', 'Ensenada')
+        df['Dimension'] = df['Dimension'].str.replace('50 000-99 999 habitantes', 'Mexicali')
+        df['Dimension'] = df['Dimension'].str.replace('100 000 y más habitantes', 'Tijuana')
+        df.to_csv('poblacion_ciudades.csv', index=False)
+        df = pd.read_csv('poblacion_ciudades.csv')
+        return df
 
 
     nuevoDataset = filtrar_dataset(df)
+    nuevoDataset = filtrarCiudades(nuevoDataset)
+
+
+
+
     #print('\nNuevo Dataset mostrandose :D')
-    print(nuevoDataset)
+    #print(nuevoDataset.head(500))
