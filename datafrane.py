@@ -28,7 +28,7 @@ class Dataframe():
         #df['Total 2'] = df.iloc[:, 5:7].sum(axis=1)
         return df
 
-    def filtrarCiudades(df):
+    def filtrar_ciudades(df):
         # Designar ciudades por su rando de habitantes
         df['Dimension'] = df['Dimension'].str.replace('Menos de 2 500 habitantes', 'Rosarito')
         df['Dimension'] = df['Dimension'].str.replace('2 500-14 999 habitantes', 'Tecate')
@@ -40,7 +40,7 @@ class Dataframe():
         return df
 
     nuevoDataset = filtrar_dataset(df)
-    nuevoDataset = filtrarCiudades(nuevoDataset)
+    nuevoDataset = filtrar_ciudades(nuevoDataset)
 
     #test = nuevoDataset.groupby('Dimension').describe()
     #test.to_csv('purbas.csv')
