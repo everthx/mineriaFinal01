@@ -42,8 +42,16 @@ class Dataframe():
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrar_ciudades(nuevoDataset)
 
+    #       Declaracion de nuestras columnas para el plot
+    x = nuevoDataset['Dimension']
+    y1 = nuevoDataset['Hombres']
+    y2 = nuevoDataset['Mujeres']
+    #       Vista de los 3
+    for values in zip(x,y1,y2):
+        print(values)
+
+
     #test = nuevoDataset.groupby('Dimension').describe()
     #test.to_csv('purbas.csv')
-    #print('\nNuevo Dataset mostrandose :D')
-    print(nuevoDataset.groupby('Dimension').max())
+    #print(nuevoDataset.groupby('Dimension').max())
     #print(nuevoDataset.chunksize())
