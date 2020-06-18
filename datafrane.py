@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 # noinspection SpellCheckingInspection
 class Dataframe():
 
@@ -27,20 +26,39 @@ class Dataframe():
         #       Guardar nuevo dataset filtrado
         df.to_csv('poblacion_filtrado.csv', index=False)
         df = pd.read_csv('poblacion_filtrado.csv')
-
         # df['Total 2'] = df.iloc[:, 5:7].sum(axis=1)
         return df
 
     def filtrar_ciudades(df):
-        # Designar ciudades por su rando de habitantes
+        #       Designar ciudades por su rando de habitantes
         df['Dimension'] = df['Dimension'].str.replace('Menos de 2 500 habitantes', 'Rosarito')
         df['Dimension'] = df['Dimension'].str.replace('2 500-14 999 habitantes', 'Tecate')
         df['Dimension'] = df['Dimension'].str.replace('15 000-49 999 habitantes', 'Ensenada')
         df['Dimension'] = df['Dimension'].str.replace('50 000-99 999 habitantes', 'Mexicali')
         df['Dimension'] = df['Dimension'].str.replace('100 000 y más habitantes', 'Tijuana')
 
-        # << FALTA AGREGAR>> Cambio a categorias numericas los rangos de edades
-
+        #       Cambio a categorias numericas los rangos de edades
+        df['Edades'] = df['Edades'].str.replace('00-04 años', '1')
+        df['Edades'] = df['Edades'].str.replace('05-09 años', '2')
+        df['Edades'] = df['Edades'].str.replace('10-14 años', '3')
+        df['Edades'] = df['Edades'].str.replace('15-19 años', '4')
+        df['Edades'] = df['Edades'].str.replace('20-24 años', '5')
+        df['Edades'] = df['Edades'].str.replace('25-29 años', '6')
+        df['Edades'] = df['Edades'].str.replace('30-34 años', '7')
+        df['Edades'] = df['Edades'].str.replace('35-39 años', '8')
+        df['Edades'] = df['Edades'].str.replace('40-44 años', '9')
+        df['Edades'] = df['Edades'].str.replace('45-49 años', '10')
+        df['Edades'] = df['Edades'].str.replace('50-54 años', '11')
+        df['Edades'] = df['Edades'].str.replace('55-59 años', '12')
+        df['Edades'] = df['Edades'].str.replace('60-64 años', '13')
+        df['Edades'] = df['Edades'].str.replace('65-69 años', '14')
+        df['Edades'] = df['Edades'].str.replace('70-74 años', '15')
+        df['Edades'] = df['Edades'].str.replace('75 años y más', '16')
+        df['Edades'] = df['Edades'].str.replace('No especificado', '0')
+        df['Edades'] = df['Edades'].str.replace('Total', '17')
+        #       Convertir columna Edades a tipo Entero
+        df['Edades'] = df['Edades'].astype(int)
+        #       Guardar a CSV
         df.to_csv('poblacion_ciudades.csv', index=False)
         df = pd.read_csv('poblacion_ciudades.csv')
         return df
@@ -55,11 +73,7 @@ class Dataframe():
     x, y1, y2 = separar_columnas(nuevoDataset)
 
     #print( nuevoDataset['Edades'].head(20) )
-
-
-
-
-
+    print(nuevoDataset['Edades'])
 
 
     #   ================================================== Prubas de codigo e ideas ==================================================
@@ -75,7 +89,7 @@ class Dataframe():
     """
 
     #       ver las 3 listas de columnas
-    #for values in zip(x, y1, y2):
+    #for values in izip(x, y1, y2):
     #    print(values)
 
     # test = nuevoDataset.groupby('Dimension').describe()
