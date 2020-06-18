@@ -72,7 +72,6 @@ class Dataframe():
     nuevoDataset = filtrar_ciudades(nuevoDataset)
     x, y1, y2 = separar_columnas(nuevoDataset)
 
-    #print( nuevoDataset['Edades'].head(20) )
     print(nuevoDataset['Edades'])
 
 
