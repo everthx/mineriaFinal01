@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # noinspection SpellCheckingInspection
 class Dataframe():
@@ -70,6 +71,7 @@ class Dataframe():
 
     #<< Agregar metodo y PLOT con porcentaje de habitantes por municipio en BC >>
 
+
     # << Agregar metodo y PLOT Composicion de la poblacion por municipio segun su sexo a.k.a % entre HyM por ciudad >>
 
     # << Agregar metodo y PLOT Extraer la Edad mediana y Maxima de HyM por BC (si sobra time por Ciudad) >>
@@ -78,7 +80,13 @@ class Dataframe():
     nuevoDataset = filtrar_ciudades(nuevoDataset)
     x, y1, y2 = separar_columnas(nuevoDataset)
 
-    print(nuevoDataset)
+    ciudades = nuevoDataset.loc[ ( ~nuevoDataset['Dimension'].str.contains('Total') ) & ( nuevoDataset['Edades']==17) ]
+    ciudades = ciudades.drop(['Estado','Edades','Estimador','Hombres','Mujeres'], axis=1)
+
+    plt.pie(ciudades)
+    plt.show()
+
+    #print(ciudades)
 
 
     #   ================================================== Prubas de codigo e ideas ==================================================
