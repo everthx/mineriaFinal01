@@ -68,11 +68,17 @@ class Dataframe():
         x, y1, y2 = (df['Dimension'], df['Hombres'], df['Mujeres'])
         return x, y1, y2
 
+    #<< Agregar metodo y PLOT con porcentaje de habitantes por municipio en BC >>
+
+    # << Agregar metodo y PLOT Composicion de la poblacion por municipio segun su sexo a.k.a % entre HyM por ciudad >>
+
+    # << Agregar metodo y PLOT Extraer la Edad mediana y Maxima de HyM por BC (si sobra time por Ciudad) >>
+
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrar_ciudades(nuevoDataset)
     x, y1, y2 = separar_columnas(nuevoDataset)
 
-    print(nuevoDataset['Edades'])
+    print(nuevoDataset)
 
 
     #   ================================================== Prubas de codigo e ideas ==================================================
