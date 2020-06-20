@@ -71,26 +71,24 @@ class Dataframe():
 
     #<< Agregar metodo y PLOT con porcentaje de habitantes por municipio en BC >>
 
-
-    # << Agregar metodo y PLOT Composicion de la poblacion por municipio segun su sexo a.k.a % entre HyM por ciudad >>
-
-    # << Agregar metodo y PLOT Extraer la Edad mediana y Maxima de HyM por BC (si sobra time por Ciudad) >>
-
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrar_ciudades(nuevoDataset)
     x, y1, y2 = separar_columnas(nuevoDataset)
 
-    ciudades = nuevoDataset.loc[ ( ~nuevoDataset['Dimension'].str.contains('Total') ) & ( nuevoDataset['Edades']==17) ]
-    ciudades = ciudades.drop(['Estado','Edades','Estimador','Hombres','Mujeres'], axis=1)
+    ciudades = nuevoDataset.loc[(~nuevoDataset['Dimension'].str.contains('Total')) & (nuevoDataset['Edades'] == 17)]
+    ciudades = ciudades.drop(['Estado', 'Edades', 'Estimador', 'Hombres', 'Mujeres'], axis=1)
+    print(ciudades)
 
     a = (ciudades['Poblacion Total'])
     b = (ciudades['Dimension'])
     plt.pie(a, labels=b, autopct="%0.1f %%")
     plt.axis("equal")
     plt.show()
+    # << Agregar metodo y PLOT Composicion de la poblacion por municipio segun su sexo a.k.a % entre HyM por ciudad >>
 
-    #print(ciudades)
 
+
+    # << Agregar metodo y PLOT Extraer la Edad mediana y Maxima de HyM por BC (si sobra time por Ciudad) >>
 
     #   ================================================== Prubas de codigo e ideas ==================================================
     #   ===============================================================================================================================
