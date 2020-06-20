@@ -1,8 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from pandas import DataFrame
-
+import pylab as pl
 
 # noinspection SpellCheckingInspection
 class Dataframe():
@@ -109,6 +108,24 @@ class Dataframe():
             print(numeros)
         plt.show()
 
+    def plot_sexo_municipio2(df):
+        df = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
+        df = df.drop(['Estado','Edades','Estimador','Poblacion Total'], axis=1)
+        df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
+        df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
+        x, y1, y2 = (df['Dimension'], df['%Hombres'], df['%Mujeres'])
+        X = np.arange(5)
+        pl.bar(X,+y1, facecolor='#9999ff', edgecolor='white')
+        pl.bar(X,-y2, facecolor='#ff9999', edgecolor='white')
+        for x, y in zip(X, y1):
+            pl.text(x + 0.1, y + 0.025, '%.2f' % y, ha='center', va='bottom')
+        for x, y in zip(X, y2):
+            pl.text(x + 0.1, -y + 0.025, '%.2f' % y, ha='center', va='top')
+        pl.title('Composicion por Municipio segun su Sexo')
+        pl.legend(labels=['Hombres','Mujeres'])
+        pl.ylim(-60.0, +80.0)
+        plt.show()
+
     # << Agregar metodo y PLOT Extraer la Edad mediana y Maxima de HyM por BC (si sobra time por Ciudad) >>
 
     nuevoDataset = filtrar_dataset(df)
@@ -116,7 +133,20 @@ class Dataframe():
     #x, y1, y2 = separar_columnas(nuevoDataset)
     #plot_habitantes_municipio(nuevoDataset)
 
-    plot_sexo_municipio(nuevoDataset)
+    plot_sexo_municipio2(nuevoDataset)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     #   ================================================== Prubas de codigo e ideas ==================================================
