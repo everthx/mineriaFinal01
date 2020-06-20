@@ -1,5 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
+from pandas import DataFrame
+
 
 # noinspection SpellCheckingInspection
 class Dataframe():
@@ -65,31 +68,54 @@ class Dataframe():
         return df
 
     def separar_columnas(df):
-        #       Declaracion de nuestras columnas para el plot
-        x, y1, y2 = (df['Dimension'], df['Hombres'], df['Mujeres'])
-        return x, y1, y2
+        df = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
+        df = df.drop(['Estado','Edades','Estimador','Poblacion Total'], axis=1)
+        df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
+        df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
+        x, y1, y2 = (df['Dimension'], df['%Hombres'], df['%Mujeres'])
+        #return x, y1, y2
+        #df = pd.DataFrame( { 'Hombres':y1,'Mujeres':y2 }, index=x )
+        #barras = df.plot.bar(rot=0)
+        N=5
+        ind = np.arange(N)
+        width = 0.35
+        fig = plt.figure()
+        ax = fig.add_axes([0, 0, 1, 1])
+        ax.bar(ind, y1, width, color='r')
+        ax.bar(ind, y2, width, bottom=y1, color='b')
+        ax.set_ylabel('Porcentaje')
+        ax.set_title('Composicion por Municipio segun su Sexo')
+        ax.set_xticks(ind, ('G1', 'G2', 'G3', 'G4', 'G5'))
+        ax.set_yticks(np.arange(0, 80, 10))
+        ax.legend(labels=['Men', 'Women'])
+        plt.show()
+
 
     #<< Agregar metodo y PLOT con porcentaje de habitantes por municipio en BC >>
 
+    def plot_habitantes_municipio(df):
+        #       Separar a columnas necesarias para el Plot
+        ciudades = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
+        a = (ciudades['Poblacion Total'])
+        b = (ciudades['Dimension'])
+        #       Haciendo el Plot
+        plt.pie(a, labels=b, autopct="%0.1f %%", startangle=140)
+        plt.axis("equal")
+        plt.title('Porcentaje de Habitantes por municipio en B.C.\n\n')
+        plt.show()
 
     # << Agregar metodo y PLOT Composicion de la poblacion por municipio segun su sexo a.k.a % entre HyM por ciudad >>
+
+
 
     # << Agregar metodo y PLOT Extraer la Edad mediana y Maxima de HyM por BC (si sobra time por Ciudad) >>
 
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrar_ciudades(nuevoDataset)
-    x, y1, y2 = separar_columnas(nuevoDataset)
+    #x, y1, y2 = separar_columnas(nuevoDataset)
+    #plot_habitantes_municipio(nuevoDataset)
 
-    ciudades = nuevoDataset.loc[ ( ~nuevoDataset['Dimension'].str.contains('Total') ) & ( nuevoDataset['Edades']==17) ]
-    ciudades = ciudades.drop(['Estado','Edades','Estimador','Hombres','Mujeres'], axis=1)
-    print()
-    a = (ciudades['Poblacion Total'])
-    b = (ciudades['Dimension'])
-    plt.pie(a, labels=b, autopct="%0.1f %%")
-    plt.axis("equal")
-    plt.show()
-
-    #print(ciudades)
+    separar_columnas(nuevoDataset)
 
 
     #   ================================================== Prubas de codigo e ideas ==================================================
