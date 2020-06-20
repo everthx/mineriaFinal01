@@ -83,7 +83,10 @@ class Dataframe():
     ciudades = nuevoDataset.loc[ ( ~nuevoDataset['Dimension'].str.contains('Total') ) & ( nuevoDataset['Edades']==17) ]
     ciudades = ciudades.drop(['Estado','Edades','Estimador','Hombres','Mujeres'], axis=1)
 
-    plt.pie(ciudades)
+    a = (ciudades['Poblacion Total'])
+    b = (ciudades['Dimension'])
+    plt.pie(a, labels=b, autopct="%0.1f %%")
+    plt.axis("equal")
     plt.show()
 
     #print(ciudades)
