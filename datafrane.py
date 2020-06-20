@@ -80,49 +80,26 @@ class Dataframe():
         plt.show()
 
     # << Agregar metodo y PLOT Composicion de la poblacion por municipio segun su sexo a.k.a % entre HyM por ciudad >>
-
     def plot_sexo_municipio(df):
+        #       Separar a columnas necesarias para el Plot
         df = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
         df = df.drop(['Estado','Edades','Estimador','Poblacion Total'], axis=1)
         df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
         df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
-        x, y1, y2 = (df['Dimension'], df['%Hombres'], df['%Mujeres'])
-        #return x, y1, y2
-        #df = pd.DataFrame( { 'Hombres':y1,'Mujeres':y2 }, index=x )
-        #barras = df.plot.bar(rot=0)
-        ind = np.arange(5)
-        ind2 = df['Dimension']
-        width = 0.50
-        fig = plt.figure()
-        ax = fig.add_axes([0.1, 0.1, 0.78, 0.78])
-        ax.bar(ind2, y1, width, color='cornflowerblue')
-        ax.bar(ind2, y2, width, bottom=y1, color='pink')
-        ax.set_ylabel('Porcentaje por Sexo')
-        ax.set_xlabel('Municipios de Baja California')
-        ax.set_title('Composicion por Municipio segun su Sexo')
-        #ax.set_xticks(ind2, ('G1', 'G2', 'G3', 'G4', 'G5'))
-        ax.set_yticks(np.arange(0, 110, 10))
-        ax.legend(labels=['Hombres', 'Mujeres'])
-
-        for numeros in zip(x,y1,y2):
-            print(numeros)
-        plt.show()
-
-    def plot_sexo_municipio2(df):
-        df = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
-        df = df.drop(['Estado','Edades','Estimador','Poblacion Total'], axis=1)
-        df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
-        df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
-        x, y1, y2 = (df['Dimension'], df['%Hombres'], df['%Mujeres'])
+        etiquetas, y1, y2 = (df['Dimension'], df['%Hombres'], df['%Mujeres'])
         X = np.arange(5)
-        pl.bar(X,+y1, facecolor='#9999ff', edgecolor='white')
-        pl.bar(X,-y2, facecolor='#ff9999', edgecolor='white')
+        pl.bar(X, +y1, color='cornflowerblue', edgecolor='white')
+        pl.bar(X, -y2, color='pink', edgecolor='white')
+        #       Desplega porcentajes para Hombres y Mujeres
         for x, y in zip(X, y1):
             pl.text(x + 0.1, y + 0.025, '%.2f' % y, ha='center', va='bottom')
         for x, y in zip(X, y2):
             pl.text(x + 0.1, -y + 0.025, '%.2f' % y, ha='center', va='top')
+        #       Opciones de desplegado y PLOT
         pl.title('Composicion por Municipio segun su Sexo')
-        pl.legend(labels=['Hombres','Mujeres'])
+        pl.legend(labels=['Hombres', 'Mujeres'])
+        pl.xticks(np.arange(5), etiquetas)
+        pl.ylabel('Porcentaje por sexo')
         pl.ylim(-60.0, +80.0)
         plt.show()
 
@@ -132,8 +109,8 @@ class Dataframe():
     nuevoDataset = filtrar_ciudades(nuevoDataset)
     #x, y1, y2 = separar_columnas(nuevoDataset)
     #plot_habitantes_municipio(nuevoDataset)
-
-    plot_sexo_municipio2(nuevoDataset)
+    #plot_sexo_municipio(nuevoDataset)
+    plot_sexo_municipio(nuevoDataset)
 
 
 
@@ -169,3 +146,30 @@ class Dataframe():
     # test.to_csv('purbas.csv')
     # print(nuevoDataset.groupby('Dimension').max())
     # print(nuevoDataset.chunksize())
+
+    """def plot_sexo_municipio(df):
+        df = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
+        df = df.drop(['Estado','Edades','Estimador','Poblacion Total'], axis=1)
+        df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
+        df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
+        x, y1, y2 = (df['Dimension'], df['%Hombres'], df['%Mujeres'])
+        #return x, y1, y2
+        #df = pd.DataFrame( { 'Hombres':y1,'Mujeres':y2 }, index=x )
+        #barras = df.plot.bar(rot=0)
+        ind = np.arange(5)
+        ind2 = df['Dimension']
+        width = 0.50
+        fig = plt.figure()
+        ax = fig.add_axes([0.1, 0.1, 0.78, 0.78])
+        ax.bar(ind2, y1, width, color='cornflowerblue')
+        ax.bar(ind2, y2, width, bottom=y1, color='pink')
+        ax.set_ylabel('Porcentaje por Sexo')
+        ax.set_xlabel('Municipios de Baja California')
+        ax.set_title('Composicion por Municipio segun su Sexo')
+        #ax.set_xticks(ind2, ('G1', 'G2', 'G3', 'G4', 'G5'))
+        ax.set_yticks(np.arange(0, 110, 10))
+        ax.legend(labels=['Hombres', 'Mujeres'])
+
+        for numeros in zip(x,y1,y2):
+            print(numeros)
+        plt.show()"""
