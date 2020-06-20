@@ -67,6 +67,21 @@ class Dataframe():
         df = pd.read_csv('poblacion_ciudades.csv')
         return df
 
+    #<< Agregar metodo y PLOT con porcentaje de habitantes por municipio en BC >>
+
+    def plot_habitantes_municipio(df):
+        #       Separar a columnas necesarias para el Plot
+        ciudades = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
+        a = (ciudades['Poblacion Total'])
+        b = (ciudades['Dimension'])
+        #       Haciendo el Plot
+        plt.pie(a, labels=b, autopct="%0.1f %%", startangle=140)
+        plt.axis("equal")
+        plt.title('Porcentaje de Habitantes por municipio en B.C.\n\n')
+        plt.show()
+
+    # << Agregar metodo y PLOT Composicion de la poblacion por municipio segun su sexo a.k.a % entre HyM por ciudad >>
+
     def plot_sexo_municipio(df):
         df = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
         df = df.drop(['Estado','Edades','Estimador','Poblacion Total'], axis=1)
@@ -93,24 +108,6 @@ class Dataframe():
         for numeros in zip(x,y1,y2):
             print(numeros)
         plt.show()
-
-
-    #<< Agregar metodo y PLOT con porcentaje de habitantes por municipio en BC >>
-
-    def plot_habitantes_municipio(df):
-        #       Separar a columnas necesarias para el Plot
-        ciudades = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
-        a = (ciudades['Poblacion Total'])
-        b = (ciudades['Dimension'])
-        #       Haciendo el Plot
-        plt.pie(a, labels=b, autopct="%0.1f %%", startangle=140)
-        plt.axis("equal")
-        plt.title('Porcentaje de Habitantes por municipio en B.C.\n\n')
-        plt.show()
-
-    # << Agregar metodo y PLOT Composicion de la poblacion por municipio segun su sexo a.k.a % entre HyM por ciudad >>
-
-
 
     # << Agregar metodo y PLOT Extraer la Edad mediana y Maxima de HyM por BC (si sobra time por Ciudad) >>
 
