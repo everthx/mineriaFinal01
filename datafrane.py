@@ -67,7 +67,7 @@ class Dataframe():
         df = pd.read_csv('poblacion_ciudades.csv')
         return df
 
-    def separar_columnas(df):
+    def plot_sexo_municipio(df):
         df = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
         df = df.drop(['Estado','Edades','Estimador','Poblacion Total'], axis=1)
         df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
@@ -76,18 +76,22 @@ class Dataframe():
         #return x, y1, y2
         #df = pd.DataFrame( { 'Hombres':y1,'Mujeres':y2 }, index=x )
         #barras = df.plot.bar(rot=0)
-        N=5
-        ind = np.arange(N)
-        width = 0.35
+        ind = np.arange(5)
+        ind2 = df['Dimension']
+        width = 0.50
         fig = plt.figure()
-        ax = fig.add_axes([0, 0, 1, 1])
-        ax.bar(ind, y1, width, color='r')
-        ax.bar(ind, y2, width, bottom=y1, color='b')
-        ax.set_ylabel('Porcentaje')
+        ax = fig.add_axes([0.1, 0.1, 0.78, 0.78])
+        ax.bar(ind2, y1, width, color='cornflowerblue')
+        ax.bar(ind2, y2, width, bottom=y1, color='pink')
+        ax.set_ylabel('Porcentaje por Sexo')
+        ax.set_xlabel('Municipios de Baja California')
         ax.set_title('Composicion por Municipio segun su Sexo')
-        ax.set_xticks(ind, ('G1', 'G2', 'G3', 'G4', 'G5'))
-        ax.set_yticks(np.arange(0, 80, 10))
-        ax.legend(labels=['Men', 'Women'])
+        #ax.set_xticks(ind2, ('G1', 'G2', 'G3', 'G4', 'G5'))
+        ax.set_yticks(np.arange(0, 110, 10))
+        ax.legend(labels=['Hombres', 'Mujeres'])
+
+        for numeros in zip(x,y1,y2):
+            print(numeros)
         plt.show()
 
 
@@ -115,7 +119,7 @@ class Dataframe():
     #x, y1, y2 = separar_columnas(nuevoDataset)
     #plot_habitantes_municipio(nuevoDataset)
 
-    separar_columnas(nuevoDataset)
+    plot_sexo_municipio(nuevoDataset)
 
 
     #   ================================================== Prubas de codigo e ideas ==================================================
