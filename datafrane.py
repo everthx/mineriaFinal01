@@ -92,9 +92,9 @@ class Dataframe():
         pl.bar(X, -y2, color='pink', edgecolor='white')
         #       Desplega porcentajes para Hombres y Mujeres
         for x, y in zip(X, y1):
-            pl.text(x + 0.1, y + 0.025, '%.2f' % y, ha='center', va='bottom')
+            pl.text(x + 0.1, y + 0.025, '%.2f ' % y + '%', ha='center', va='bottom')
         for x, y in zip(X, y2):
-            pl.text(x + 0.1, -y + 0.025, '%.2f' % y, ha='center', va='top')
+            pl.text(x + 0.1, -y + 0.025, '%.2f' % y + '%', ha='center', va='top')
         #       Opciones de desplegado y PLOT
         pl.title('Composicion por Municipio segun su Sexo')
         pl.legend(labels=['Hombres', 'Mujeres'])
@@ -109,7 +109,6 @@ class Dataframe():
     nuevoDataset = filtrar_ciudades(nuevoDataset)
     #x, y1, y2 = separar_columnas(nuevoDataset)
     #plot_habitantes_municipio(nuevoDataset)
-    #plot_sexo_municipio(nuevoDataset)
     plot_sexo_municipio(nuevoDataset)
 
 
