@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pylab as pl
 import statistics as stats
+from sklearn import preprocessing
+from sklearn.cluster import KMeans
 
 # noinspection SpellCheckingInspection
 class Dataframe():
@@ -113,11 +115,43 @@ class Dataframe():
 
         #y1 = df['Hombres'].sort_values(ascending=True)
         #y1 = y1.sort_values(ascending=True)
-        print(y2)
-        print( 'mediana Superior es: \t\t', stats.median_high(y2), '\nMediana normal es: \t\t\t', stats.median(y2))
-
+        #print(y2)
+        #print( 'mediana Superior es: \t\t', stats.median_high(y2), '\nMediana normal es: \t\t\t', stats.median(y2))
+        print(df)
 
     # << Aplicar un metodo y determinar que os muestra el resultado>>
+
+
+    # << Metodo K-means Hombres con Edades>>
+    def K_means_Hombres(df):
+        df = df.loc[(~df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17)] #& ~(df['Edades'] == 0)
+        df = df.drop(['Estado', 'Dimension', 'Estimador', 'Poblacion Total','Mujeres'], axis=1)
+        #etiquetas, y1, = (df['Edades'], df['Hombres'])
+
+        # Normalización de los datos
+        min_max_scaler = preprocessing.MinMaxScaler()
+        df = min_max_scaler.fit_transform(df)
+        df = pd.DataFrame(df)  # Hay que convertir a DF el resultado.
+        df = df.rename(columns={0: 'Edades', 1: 'Hombres'})
+        #print(df)
+
+        # Representación gráfica de los datos.
+        x = df['Hombres'].values
+        y = df['Edades'].values
+        plt.xlabel('Hombres')
+        plt.ylabel('Edades')
+        plt.title('Población de Hombres entre Edades')
+        plt.plot(x, y, 'o', markersize=1)
+        #plt.show()
+
+        # Determinar el número óptimo de clústeres
+        nc = range(1, 30)  # El número de iteraciones que queremos hacer.
+        kmeans = [KMeans(n_clusters=i) for i in nc]
+        score = [kmeans[i].fit(df).score(df) for i in range(len(kmeans))]
+        plt.xlabel('Número de clústeres (k)')
+        plt.ylabel('Suma de los errores cuadráticos')
+        plt.plot(nc, score)
+        #plt.show()
 
 
     nuevoDataset = filtrar_dataset(df)
@@ -125,7 +159,10 @@ class Dataframe():
     #x, y1, y2 = separar_columnas(nuevoDataset)
     #plot_habitantes_municipio(nuevoDataset)
     #plot_sexo_municipio(nuevoDataset)
-    media_de_edades(nuevoDataset)
+    #media_de_edades(nuevoDataset)
+    K_means_Hombres(nuevoDataset)
+
+
 
 
 
