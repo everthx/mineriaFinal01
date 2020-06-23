@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import pylab as pl
+import statistics as stats
 
 # noinspection SpellCheckingInspection
 class Dataframe():
@@ -104,12 +105,33 @@ class Dataframe():
         plt.show()
 
     # << Agregar metodo y PLOT Extraer la Edad mediana y Maxima de HyM por BC (si sobra time por Ciudad) >>
+    def media_de_edades(df):
+        #       Separar a columnas necesarias para el Plot
+        df = df.loc[(df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17) & ~(df['Edades'] == 0)]
+        df = df.drop(['Estado', 'Dimension', 'Estimador', 'Poblacion Total'], axis=1)
+        etiquetas, y1, y2 = (df['Edades'], df['Hombres'], df['Mujeres'])
+
+        edades = [1,2,3,4,5]
+        hombres = [2,4,6,8,10]
+        mujeres = [3,6,9,12,15]
+        #tabla = {'x': edades, 'y': hombres, 'z': mujeres}
+        tabla = {'x': edades, 'y': hombres}
+        table = pd.DataFrame( data = tabla )
+        #y1 = df['Hombres'].sort_values(ascending=True)
+        #y1 = y1.sort_values(ascending=True)
+        print(y2)
+        print( 'mediana Superior es: \t\t', stats.median_high(y2), '\nMediana normal es: \t\t\t', stats.median(y2))
+
+
+    # << Aplicar un metodo y determinar que os muestra el resultado>>
+
 
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrar_ciudades(nuevoDataset)
     #x, y1, y2 = separar_columnas(nuevoDataset)
     #plot_habitantes_municipio(nuevoDataset)
-    plot_sexo_municipio(nuevoDataset)
+    #plot_sexo_municipio(nuevoDataset)
+    media_de_edades(nuevoDataset)
 
 
 
