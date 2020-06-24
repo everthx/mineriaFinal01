@@ -90,6 +90,7 @@ class Dataframe():
         df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
         df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
         etiquetas, y1, y2 = (df['Dimension'], df['%Hombres'], df['%Mujeres'])
+        print(etiquetas)
         X = np.arange(5)
         pl.bar(X, +y1, color='cornflowerblue', edgecolor='white')
         pl.bar(X, -y2, color='pink', edgecolor='white')
@@ -119,7 +120,29 @@ class Dataframe():
         #print( 'mediana Superior es: \t\t', stats.median_high(y2), '\nMediana normal es: \t\t\t', stats.median(y2))
         print(df)
 
-    # << Aplicar un metodo y determinar que os muestra el resultado>>
+    # << Aplicar un metodo PLOT y determinar el porcentaje de las edades de BC>>
+    def plot_edades_total(df):
+        #       Separar a columnas necesarias para el Plot
+        df = df.loc[(df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17) & ~(df['Edades'] == 0)]
+        df = df.drop(['Estado', 'Estimador', 'Poblacion Total', 'Dimension'], axis=1)
+        df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
+        df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
+        etiquetas, y1, y2 = (df['Edades'], df['%Hombres'], df['%Mujeres'])
+        X = np.arange(16)
+        pl.bar(X, +y1, color='cornflowerblue', edgecolor='white')
+        pl.bar(X, -y2, color='pink', edgecolor='white')
+        for x, y in zip(X, y1):
+            pl.text(x + 0.1, y + 0.025, '%.2f ' % y+'%', ha='center', va='bottom', fontsize=8, color='black')
+        for x, y in zip(X, y2):
+            pl.text(x + 0.1, -y + 0.025, '%.2f' % y+'%', ha='center', va='top', fontsize=8, color='black')
+        pl.title('Composición por Edades segun su Sexo')
+        pl.legend(labels=['Hombres', 'Mujeres'])
+        pl.xticks(X, ["0-04", "05-09", "10-14", "15-19", " 20-24", "25-29", "30-34", "35-39", "40-44", "45-49",
+                      "50-54", "55-59", "60-64", "65-69", "70-74", "75-más"])
+        pl.ylabel('Porcentaje por edades')
+        pl.xlabel('Edades')
+        pl.ylim(-70.0, +80.0)
+        plt.show()
 
     # << Metodo K-means Hombres con Edades>>
     def K_means_Hombres(df):
@@ -153,7 +176,7 @@ class Dataframe():
         #plt.show()
 
         # Aplicación de k-means con k = 3
-        kmeans = KMeans(n_clusters=4).fit(df)
+        kmeans = KMeans(n_clusters=3).fit(df)
         centroids = kmeans.cluster_centers_
         #print(centroids)
 
@@ -169,6 +192,8 @@ class Dataframe():
             asignar.append(colores[row])
         plt.scatter(x, y, c=asignar, s=5)
         plt.scatter(centroids[:, 1], centroids[:, 0], marker='*', c='black', s=20)  # Marco centroides.
+        plt.yticks(y, ["0-04", "05-09", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49",
+                       "50-54", "55-59", "60-64", "65-69", "70-74", "75-más"])
         plt.xlabel('Hombres')
         plt.ylabel('Edades')
         plt.show()
@@ -221,46 +246,23 @@ class Dataframe():
             asignar.append(colores[row])
         plt.scatter(x, y, c=asignar, s=5)
         plt.scatter(centroids[:, 1], centroids[:, 0], marker='*', c='black', s=20)  # Marco centroides.
+        plt.yticks(y, ["0-04", "05-09", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49",
+                       "50-54", "55-59", "60-64", "65-69", "70-74", "75-más"])
         plt.xlabel('Mujeres')
         plt.ylabel('Edades')
         plt.title('Población de Mujeres conforme a las Edades')
         plt.show()
-
-    def plot_edades_total(df):
-        #       Separar a columnas necesarias para el Plot
-        df = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
-        df = df.drop(['Estado', 'Edades', 'Estimador', 'Poblacion Total'], axis=1)
-        df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
-        df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
-        etiquetas, y1, y2 = (df['Dimension'], df['%Hombres'], df['%Mujeres'])
-        posicion_y = np.arange(5)
-
-        """X = np.arange(5)
-        pl.bar(X, +y1, color='cornflowerblue', edgecolor='white')
-        pl.bar(X, -y2, color='pink', edgecolor='white')"""
-        #       Desplega porcentajes para Hombres y Mujeres
-        """for x, y in zip(X, y1):
-            pl.text(x + 0.1, y + 0.025, '%.2f ' % y + '%', ha='center', va='bottom')
-        for x, y in zip(X, y2):
-            pl.text(x + 0.1, -y + 0.025, '%.2f' % y + '%', ha='center', va='top')"""
-        #       Opciones de desplegado y PLOT
-        """pl.title('Composicion por Municipio segun su Sexo')
-        pl.legend(labels=['Hombres', 'Mujeres'])
-        pl.xticks(np.arange(5), etiquetas)
-        pl.ylabel('Porcentaje por sexo')
-        pl.ylim(-60.0, +80.0)
-        plt.show()"""
 
 
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrar_ciudades(nuevoDataset)
     #x, y1, y2 = separar_columnas(nuevoDataset)
     #plot_habitantes_municipio(nuevoDataset)
-    plot_sexo_municipio(nuevoDataset)
+    #plot_sexo_municipio(nuevoDataset)
     #media_de_edades(nuevoDataset)
     #K_means_Hombres(nuevoDataset)
     #K_means_Mujeres(nuevoDataset)
-
+    plot_edades_total(nuevoDataset)
 
 
 
