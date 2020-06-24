@@ -173,7 +173,7 @@ class Dataframe():
         plt.ylabel('Edades')
         plt.show()
 
-
+    # << Metodo K-means Mujeres con Edades>>
     def K_means_Mujeres(df):
         df = df.loc[(~df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17)] #& ~(df['Edades'] == 0)
         df = df.drop(['Estado', 'Dimension', 'Estimador', 'Poblacion Total','Hombres'], axis=1)
@@ -226,6 +226,30 @@ class Dataframe():
         plt.title('Población de Mujeres conforme a las Edades')
         plt.show()
 
+    def plot_edades_municipio(df):
+        #       Separar a columnas necesarias para el Plot
+        df = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
+        df = df.drop(['Estado', 'Edades', 'Estimador', 'Poblacion Total'], axis=1)
+        df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
+        df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
+        etiquetas, y1, y2 = (df['Dimension'], df['%Hombres'], df['%Mujeres'])
+        posicion_y = np.arange(5)
+        """X = np.arange(5)
+        pl.bar(X, +y1, color='cornflowerblue', edgecolor='white')
+        pl.bar(X, -y2, color='pink', edgecolor='white')"""
+        #       Desplega porcentajes para Hombres y Mujeres
+        """for x, y in zip(X, y1):
+            pl.text(x + 0.1, y + 0.025, '%.2f ' % y + '%', ha='center', va='bottom')
+        for x, y in zip(X, y2):
+            pl.text(x + 0.1, -y + 0.025, '%.2f' % y + '%', ha='center', va='top')"""
+        #       Opciones de desplegado y PLOT
+        """pl.title('Composicion por Municipio segun su Sexo')
+        pl.legend(labels=['Hombres', 'Mujeres'])
+        pl.xticks(np.arange(5), etiquetas)
+        pl.ylabel('Porcentaje por sexo')
+        pl.ylim(-60.0, +80.0)
+        plt.show()"""
+
 
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrar_ciudades(nuevoDataset)
@@ -233,7 +257,7 @@ class Dataframe():
     #plot_habitantes_municipio(nuevoDataset)
     #plot_sexo_municipio(nuevoDataset)
     #media_de_edades(nuevoDataset)
-    #K_means_Hombres(nuevoDataset)
+    K_means_Hombres(nuevoDataset)
     #K_means_Mujeres(nuevoDataset)
 
 
