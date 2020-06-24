@@ -121,12 +121,10 @@ class Dataframe():
 
     # << Aplicar un metodo y determinar que os muestra el resultado>>
 
-
     # << Metodo K-means Hombres con Edades>>
     def K_means_Hombres(df):
         df = df.loc[(~df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17)] #& ~(df['Edades'] == 0)
         df = df.drop(['Estado', 'Dimension', 'Estimador', 'Poblacion Total','Mujeres'], axis=1)
-        #etiquetas, y1, = (df['Edades'], df['Hombres'])
 
         # Normalización de los datos
         min_max_scaler = preprocessing.MinMaxScaler()
@@ -138,10 +136,11 @@ class Dataframe():
         # Representación gráfica de los datos.
         x = df['Hombres'].values
         y = df['Edades'].values
+        plt.scatter(x, y, s=5)
         plt.xlabel('Hombres')
         plt.ylabel('Edades')
-        plt.title('Población de Hombres entre Edades')
-        plt.plot(x, y, 'o', markersize=1)
+        plt.title('Población de Hombres conforme a las Edades')
+        #plt.plot(x, y, 'o', markersize=1)
         #plt.show()
 
         # Determinar el número óptimo de clústeres
@@ -150,8 +149,82 @@ class Dataframe():
         score = [kmeans[i].fit(df).score(df) for i in range(len(kmeans))]
         plt.xlabel('Número de clústeres (k)')
         plt.ylabel('Suma de los errores cuadráticos')
-        plt.plot(nc, score)
+        #plt.plot(nc, score)
         #plt.show()
+
+        # Aplicación de k-means con k = 3
+        kmeans = KMeans(n_clusters=3).fit(df)
+        centroids = kmeans.cluster_centers_
+        #print(centroids)
+
+        # Etiquetado de datos.
+        labels = kmeans.predict(df) # Asignar cada registro de nuestro dataset a uno de los clústers
+        df['label'] = labels
+        #print(df)
+
+        # Representación gráfica de los clústeres k-means.
+        colores = ['red', 'green', 'blue']
+        asignar = []
+        for row in labels:
+            asignar.append(colores[row])
+        plt.scatter(x, y, c=asignar, s=5)
+        plt.scatter(centroids[:, 0], centroids[:, 1], marker='*', c='black', s=20)  # Marco centroides.
+        plt.xlabel('Hombres')
+        plt.ylabel('Edades')
+        plt.show()
+
+
+    def K_means_Mujeres(df):
+        df = df.loc[(~df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17)] #& ~(df['Edades'] == 0)
+        df = df.drop(['Estado', 'Dimension', 'Estimador', 'Poblacion Total','Hombres'], axis=1)
+
+        # Normalización de los datos
+        min_max_scaler = preprocessing.MinMaxScaler()
+        df = min_max_scaler.fit_transform(df)
+        df = pd.DataFrame(df)  # Hay que convertir a DF el resultado.
+        df = df.rename(columns={0: 'Edades', 1: 'Mujeres'})
+        #print(df)
+
+        # Representación gráfica de los datos.
+        x = df['Mujeres'].values
+        y = df['Edades'].values
+        plt.scatter(x, y, s=5)
+        plt.xlabel('Mujeres')
+        plt.ylabel('Edades')
+        plt.title('Población de Mujeres conforme a las Edades')
+        #plt.plot(x, y, 'o', markersize=1)
+        #plt.show()
+
+        # Determinar el número óptimo de clústeres
+        nc = range(1, 30)  # El número de iteraciones que queremos hacer.
+        kmeans = [KMeans(n_clusters=i) for i in nc]
+        score = [kmeans[i].fit(df).score(df) for i in range(len(kmeans))]
+        plt.xlabel('Número de clústeres (k)')
+        plt.ylabel('Suma de los errores cuadráticos')
+        #plt.plot(nc, score)
+        #plt.show()
+
+        # Aplicación de k-means con k = 5
+        kmeans = KMeans(n_clusters=3).fit(df)
+        centroids = kmeans.cluster_centers_
+        #print(centroids)
+
+        # Etiquetado de datos.
+        labels = kmeans.predict(df) # Asignar cada registro de nuestro dataset a uno de los clústers
+        df['label'] = labels
+        #print(df)
+
+        # Representación gráfica de los clústeres k-means.
+        colores = ['red', 'green', 'blue']
+        asignar = []
+        for row in labels:
+            asignar.append(colores[row])
+        plt.scatter(x, y, c=asignar, s=5)
+        plt.scatter(centroids[:, 0], centroids[:, 1], marker='*', c='black', s=20)  # Marco centroides.
+        plt.xlabel('Mujeres')
+        plt.ylabel('Edades')
+        plt.title('Población de Mujeres conforme a las Edades')
+        plt.show()
 
 
     nuevoDataset = filtrar_dataset(df)
@@ -160,7 +233,8 @@ class Dataframe():
     #plot_habitantes_municipio(nuevoDataset)
     #plot_sexo_municipio(nuevoDataset)
     #media_de_edades(nuevoDataset)
-    K_means_Hombres(nuevoDataset)
+    #K_means_Hombres(nuevoDataset)
+    #K_means_Mujeres(nuevoDataset)
 
 
 
