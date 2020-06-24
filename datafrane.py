@@ -257,7 +257,7 @@ class Dataframe():
     #plot_habitantes_municipio(nuevoDataset)
     #plot_sexo_municipio(nuevoDataset)
     #media_de_edades(nuevoDataset)
-    K_means_Hombres(nuevoDataset)
+    #K_means_Hombres(nuevoDataset)
     #K_means_Mujeres(nuevoDataset)
 
 
