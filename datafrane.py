@@ -123,14 +123,14 @@ class Dataframe():
 
     # << Metodo K-means Hombres con Edades>>
     def K_means_Hombres(df):
-        df = df.loc[(~df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17)] #& ~(df['Edades'] == 0)
+        df = df.loc[(~df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17) & ~(df['Edades'] == 0)]
         df = df.drop(['Estado', 'Dimension', 'Estimador', 'Poblacion Total','Mujeres'], axis=1)
 
         # Normalización de los datos
-        min_max_scaler = preprocessing.MinMaxScaler()
+        """min_max_scaler = preprocessing.MinMaxScaler()
         df = min_max_scaler.fit_transform(df)
         df = pd.DataFrame(df)  # Hay que convertir a DF el resultado.
-        df = df.rename(columns={0: 'Edades', 1: 'Hombres'})
+        df = df.rename(columns={0: 'Edades', 1: 'Hombres'})"""
         #print(df)
 
         # Representación gráfica de los datos.
@@ -153,7 +153,7 @@ class Dataframe():
         #plt.show()
 
         # Aplicación de k-means con k = 3
-        kmeans = KMeans(n_clusters=3).fit(df)
+        kmeans = KMeans(n_clusters=4).fit(df)
         centroids = kmeans.cluster_centers_
         #print(centroids)
 
@@ -163,26 +163,26 @@ class Dataframe():
         #print(df)
 
         # Representación gráfica de los clústeres k-means.
-        colores = ['red', 'green', 'blue']
+        colores = ['red', 'green', 'blue','yellow']
         asignar = []
         for row in labels:
             asignar.append(colores[row])
         plt.scatter(x, y, c=asignar, s=5)
-        plt.scatter(centroids[:, 0], centroids[:, 1], marker='*', c='black', s=20)  # Marco centroides.
+        plt.scatter(centroids[:, 1], centroids[:, 0], marker='*', c='black', s=20)  # Marco centroides.
         plt.xlabel('Hombres')
         plt.ylabel('Edades')
         plt.show()
 
     # << Metodo K-means Mujeres con Edades>>
     def K_means_Mujeres(df):
-        df = df.loc[(~df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17)] #& ~(df['Edades'] == 0)
+        df = df.loc[(~df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17) & ~(df['Edades'] == 0)]
         df = df.drop(['Estado', 'Dimension', 'Estimador', 'Poblacion Total','Hombres'], axis=1)
 
         # Normalización de los datos
-        min_max_scaler = preprocessing.MinMaxScaler()
+        """min_max_scaler = preprocessing.MinMaxScaler()
         df = min_max_scaler.fit_transform(df)
         df = pd.DataFrame(df)  # Hay que convertir a DF el resultado.
-        df = df.rename(columns={0: 'Edades', 1: 'Mujeres'})
+        df = df.rename(columns={0: 'Edades', 1: 'Mujeres'})"""
         #print(df)
 
         # Representación gráfica de los datos.
@@ -220,13 +220,13 @@ class Dataframe():
         for row in labels:
             asignar.append(colores[row])
         plt.scatter(x, y, c=asignar, s=5)
-        plt.scatter(centroids[:, 0], centroids[:, 1], marker='*', c='black', s=20)  # Marco centroides.
+        plt.scatter(centroids[:, 1], centroids[:, 0], marker='*', c='black', s=20)  # Marco centroides.
         plt.xlabel('Mujeres')
         plt.ylabel('Edades')
         plt.title('Población de Mujeres conforme a las Edades')
         plt.show()
 
-    def plot_edades_municipio(df):
+    def plot_edades_total(df):
         #       Separar a columnas necesarias para el Plot
         df = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
         df = df.drop(['Estado', 'Edades', 'Estimador', 'Poblacion Total'], axis=1)
@@ -234,6 +234,7 @@ class Dataframe():
         df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
         etiquetas, y1, y2 = (df['Dimension'], df['%Hombres'], df['%Mujeres'])
         posicion_y = np.arange(5)
+
         """X = np.arange(5)
         pl.bar(X, +y1, color='cornflowerblue', edgecolor='white')
         pl.bar(X, -y2, color='pink', edgecolor='white')"""
@@ -255,7 +256,7 @@ class Dataframe():
     nuevoDataset = filtrar_ciudades(nuevoDataset)
     #x, y1, y2 = separar_columnas(nuevoDataset)
     #plot_habitantes_municipio(nuevoDataset)
-    #plot_sexo_municipio(nuevoDataset)
+    plot_sexo_municipio(nuevoDataset)
     #media_de_edades(nuevoDataset)
     #K_means_Hombres(nuevoDataset)
     #K_means_Mujeres(nuevoDataset)
