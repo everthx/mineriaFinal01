@@ -7,8 +7,9 @@ from sklearn import preprocessing
 from sklearn.cluster import KMeans
 
 # noinspection SpellCheckingInspection
-class Dataframe():
 
+
+class Dataframe():
     pd.set_option('display.width', 300)
     pd.set_option('display.max_columns', None)
     df = pd.read_csv('01_POBLACION_01_BC.csv', encoding="ISO-8859-1")
@@ -239,33 +240,36 @@ class Dataframe():
         plt.title('Población de Mujeres conforme a las Edades')
         plt.show()
 
-
+    global nuevoDataset
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrar_ciudades(nuevoDataset)
 
-    def menu(self):
-        print('\n\nElija una de las siguiente opciones para mostrar\n')
-        opcion = input('1- Grafica Habitantes por Municipio\t\t\t\t\t2- Grafica de Sexo por municipio\n3- Grafica entre edades y poblacion en BC\t\t\t'
-                '4- Grafica poblacional de hombres y su edad\n5- Grafica poblacional de hombres y su edad\t\t\t6- Sali1'
-                       '\n\n::')
+def menu(nuevoDataset):
+    print('\n\nElija una de las siguiente opciones para mostrar\n')
+    opcion = input('1- Grafica Habitantes por Municipio\t\t\t\t\t2- Grafica de Sexo por municipio\n3- Grafica entre edades y poblacion en BC\t\t\t'
+            '4- Grafica poblacional de hombres y su edad\n5- Grafica poblacional de hombres y su edad\t\t\t6- Sali1'
+                   '\n\n::')
 
-        if(opcion == '1'):
-            self.plot_habitantes_municipio(nuevoDataset)
-        elif(opcion =='2'):
-            plot_sexo_municipio(nuevoDataset)
-        elif (opcion == '3'):
-            plot_edades_total(nuevoDataset)
-        elif (opcion == '4'):
-            K_means_Hombres(nuevoDataset)
-        elif (opcion == '5'):
-            K_means_Mujeres(nuevoDataset)
-        elif (opcion == '6'):
-            exit()
-        else:
-            print('Error Opcion Invalida, intente de nuevo.')
+    if(opcion == '1'):
+        plot_habitantes_municipio(nuevoDataset)
+    elif(opcion =='2'):
+        plot_sexo_municipio(nuevoDataset)
+    elif (opcion == '3'):
+        plot_edades_total(nuevoDataset)
+    elif (opcion == '4'):
+        K_means_Hombres(nuevoDataset)
+    elif (opcion == '5'):
+        K_means_Mujeres(nuevoDataset)
+    elif (opcion == '6'):
+        exit()
+    else:
+        print('Error Opcion Invalida, intente de nuevo.')
 
+if __name__ == '__main__':
     menu()
 
+import subprocess
+cls = subprocess.call('cls',shell=True)
 
     #plot_habitantes_municipio(nuevoDataset)
     #plot_sexo_municipio(nuevoDataset)
