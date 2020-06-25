@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pylab as pl
 from sklearn.cluster import KMeans
-#from os import system
+
 import subprocess
 
 class Dataframe():
@@ -34,7 +34,7 @@ class Dataframe():
         return df
 
     def filtrar_ciudades(df):
-        #       Designar ciudades por su rando de habitantes
+        #       Relacionar ciudades por su rango de habitantes
         df['Dimension'] = df['Dimension'].str.replace('Menos de 2 500 habitantes', 'Rosarito')
         df['Dimension'] = df['Dimension'].str.replace('2 500-14 999 habitantes', 'Tecate')
         df['Dimension'] = df['Dimension'].str.replace('15 000-49 999 habitantes', 'Ensenada')
@@ -242,6 +242,9 @@ class Dataframe():
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrar_ciudades(nuevoDataset)
 
+    #plot_habitantes_municipio(nuevoDataset)
+    plot_edades_total(nuevoDataset)
+
 def main():
     #system('cls')
     subprocess.call('cls', shell=True)
@@ -269,8 +272,8 @@ def main():
     else:
         print('Error Opción Invalida, intente de nuevo.')
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+ #   main()
 
 
 
