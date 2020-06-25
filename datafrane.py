@@ -28,7 +28,7 @@ class Dataframe():
         df.to_csv('poblacion_filtrado.csv', index=False)
         df = pd.read_csv('poblacion_filtrado.csv')
 
-        # df['Total 2'] = df.iloc[:, 5:7].sum(axis=1)
+        #df['Total 2'] = df.iloc[:, 5:7].sum(axis=1)
         return df
 
     def filtrar_ciudades(df):
