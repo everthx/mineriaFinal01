@@ -32,7 +32,6 @@ class Dataframe():
         #       Guardar nuevo dataset filtrado
         df.to_csv('poblacion_filtrado.csv', index=False)
         df = pd.read_csv('poblacion_filtrado.csv')
-        # df['Total 2'] = df.iloc[:, 5:7].sum(axis=1)
         return df
 
     def filtrar_ciudades(df):
@@ -69,20 +68,18 @@ class Dataframe():
         df = pd.read_csv('poblacion_ciudades.csv')
         return df
 
-    #<< Agregar metodo y PLOT con porcentaje de habitantes por municipio en BC >>
-
     def plot_habitantes_municipio(df):
         #       Separar a columnas necesarias para el Plot
         ciudades = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
         a = (ciudades['Poblacion Total'])
         b = (ciudades['Dimension'])
         #       Haciendo el Plot
+        plt.figure('Gráfica: Habitantes por Municipio')
         plt.pie(a, labels=b, autopct="%0.1f %%", startangle=140)
         plt.axis("equal")
         plt.title('Porcentaje de Habitantes por municipio en B.C.\n\n')
         plt.show()
 
-    # << Agregar metodo y PLOT Composicion de la poblacion por municipio segun su sexo a.k.a % entre HyM por ciudad >>
     def plot_sexo_municipio(df):
         #       Separar a columnas necesarias para el Plot
         df = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
@@ -90,7 +87,8 @@ class Dataframe():
         df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
         df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
         etiquetas, y1, y2 = (df['Dimension'], df['%Hombres'], df['%Mujeres'])
-        print(etiquetas)
+
+        plt.figure('Gráfica: Composicón por Municipio segun su Sexo')
         X = np.arange(5)
         pl.bar(X, +y1, color='cornflowerblue', edgecolor='white')
         pl.bar(X, -y2, color='pink', edgecolor='white')
@@ -100,27 +98,13 @@ class Dataframe():
         for x, y in zip(X, y2):
             pl.text(x + 0.1, -y + 0.025, '%.2f' % y + '%', ha='center', va='top')
         #       Opciones de desplegado y PLOT
-        pl.title('Composicion por Municipio segun su Sexo')
+        pl.title('Composición por Municipio segun su Sexo')
         pl.legend(labels=['Hombres', 'Mujeres'])
         pl.xticks(np.arange(5), etiquetas)
         pl.ylabel('Porcentaje por sexo')
         pl.ylim(-60.0, +80.0)
         plt.show()
 
-    # << Agregar metodo y PLOT Extraer la Edad mediana y Maxima de HyM por BC (si sobra time por Ciudad) >>
-    def media_de_edades(df):
-        #       Separar a columnas necesarias para el Plot
-        df = df.loc[(df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17) & ~(df['Edades'] == 0)]
-        df = df.drop(['Estado', 'Dimension', 'Estimador', 'Poblacion Total'], axis=1)
-        etiquetas, y1, y2 = (df['Edades'], df['Hombres'], df['Mujeres'])
-
-        #y1 = df['Hombres'].sort_values(ascending=True)
-        #y1 = y1.sort_values(ascending=True)
-        #print(y2)
-        #print( 'mediana Superior es: \t\t', stats.median_high(y2), '\nMediana normal es: \t\t\t', stats.median(y2))
-        print(df)
-
-    # << Aplicar un metodo PLOT y determinar el porcentaje de las edades de BC>>
     def plot_edades_total(df):
         #       Separar a columnas necesarias para el Plot
         df = df.loc[(df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17) & ~(df['Edades'] == 0)]
@@ -128,6 +112,7 @@ class Dataframe():
         df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
         df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
         etiquetas, y1, y2 = (df['Edades'], df['%Hombres'], df['%Mujeres'])
+        plt.figure('Gráfica: Composición por Edades segun su Sexo', figsize=(12, 5))
         X = np.arange(16)
         pl.bar(X, +y1, color='cornflowerblue', edgecolor='white')
         pl.bar(X, -y2, color='pink', edgecolor='white')
@@ -144,7 +129,6 @@ class Dataframe():
         pl.ylim(-70.0, +80.0)
         plt.show()
 
-    # << Metodo K-means Hombres con Edades>>
     def K_means_Hombres(df):
         df = df.loc[(~df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17) & ~(df['Edades'] == 0)]
         df = df.drop(['Estado', 'Dimension', 'Estimador', 'Poblacion Total','Mujeres'], axis=1)
@@ -159,6 +143,7 @@ class Dataframe():
         # Representación gráfica de los datos.
         x = df['Hombres'].values
         y = df['Edades'].values
+        plt.figure('Gráfica: K-Means Población de Hombres conforme a las Edades', figsize=(10,7))
         plt.scatter(x, y, s=5)
         plt.xlabel('Hombres')
         plt.ylabel('Edades')
@@ -213,6 +198,7 @@ class Dataframe():
         # Representación gráfica de los datos.
         x = df['Mujeres'].values
         y = df['Edades'].values
+        plt.figure('Gráfica: K-Means Población de Mujeres conforme a las Edades', figsize=(10, 7))
         plt.scatter(x, y, s=5)
         plt.xlabel('Mujeres')
         plt.ylabel('Edades')
@@ -256,13 +242,36 @@ class Dataframe():
 
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrar_ciudades(nuevoDataset)
-    #x, y1, y2 = separar_columnas(nuevoDataset)
+
+    def menu(self):
+        print('\n\nElija una de las siguiente opciones para mostrar\n')
+        opcion = input('1- Grafica Habitantes por Municipio\t\t\t\t\t2- Grafica de Sexo por municipio\n3- Grafica entre edades y poblacion en BC\t\t\t'
+                '4- Grafica poblacional de hombres y su edad\n5- Grafica poblacional de hombres y su edad\t\t\t6- Sali1'
+                       '\n\n::')
+
+        if(opcion == '1'):
+            self.plot_habitantes_municipio(nuevoDataset)
+        elif(opcion =='2'):
+            plot_sexo_municipio(nuevoDataset)
+        elif (opcion == '3'):
+            plot_edades_total(nuevoDataset)
+        elif (opcion == '4'):
+            K_means_Hombres(nuevoDataset)
+        elif (opcion == '5'):
+            K_means_Mujeres(nuevoDataset)
+        elif (opcion == '6'):
+            exit()
+        else:
+            print('Error Opcion Invalida, intente de nuevo.')
+
+    menu()
+
+
     #plot_habitantes_municipio(nuevoDataset)
     #plot_sexo_municipio(nuevoDataset)
-    #media_de_edades(nuevoDataset)
     #K_means_Hombres(nuevoDataset)
     #K_means_Mujeres(nuevoDataset)
-    plot_edades_total(nuevoDataset)
+    #plot_edades_total(nuevoDataset)
 
 
 
