@@ -267,7 +267,7 @@ def main():
     elif (opcion == '6'):
         exit()
     else:
-        print('Error Opcion Invalida, intente de nuevo.')
+        print('Error Opción Invalida, intente de nuevo.')
 
 if __name__ == "__main__":
     main()
