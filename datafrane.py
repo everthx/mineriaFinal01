@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import pylab as pl
+from sklearn import preprocessing
 from sklearn.cluster import KMeans
 
 import subprocess
@@ -136,14 +137,16 @@ class Dataframe():
         """min_max_scaler = preprocessing.MinMaxScaler()
         df = min_max_scaler.fit_transform(df)
         df = pd.DataFrame(df)  # Hay que convertir a DF el resultado.
-        df = df.rename(columns={0: 'Edades', 1: 'Hombres'})"""
-        #print(df)
+        df = df.rename(columns={0: 'Edades', 1: 'Hombres'})
+        #print(df)"""
 
         # Representación gráfica de los datos.
         x = df['Hombres'].values
         y = df['Edades'].values
-        plt.figure('Gráfica: K-Means Población de Hombres conforme a las Edades', figsize=(10,7))
-        plt.scatter(x, y, s=5)
+        plt.figure('Gráfica: K-Means Población de Hombres conforme a las Edades', figsize=(10, 7))
+        #plt.scatter(x, y, s=5)
+        #plt.yticks(y, ["0-04", "05-09", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49",
+          #             "50-54", "55-59", "60-64", "65-69", "70-74", "75-más"])
         plt.xlabel('Hombres')
         plt.ylabel('Edades')
         plt.title('Población de Hombres conforme a las Edades')
@@ -172,6 +175,7 @@ class Dataframe():
         # Representación gráfica de los clústeres k-means.
         colores = ['red', 'green', 'blue','yellow']
         asignar = []
+
         for row in labels:
             asignar.append(colores[row])
         plt.scatter(x, y, c=asignar, s=5)
@@ -243,7 +247,8 @@ class Dataframe():
     nuevoDataset = filtrar_ciudades(nuevoDataset)
 
     #plot_habitantes_municipio(nuevoDataset)
-    plot_edades_total(nuevoDataset)
+    #plot_edades_total(nuevoDataset)
+    K_means_Mujeres(nuevoDataset)
 
 def main():
     #system('cls')
