@@ -246,13 +246,11 @@ class Dataframe():
     nuevoDataset = filtrar_dataset(df)
     nuevoDataset = filtrar_ciudades(nuevoDataset)
 
-    #plot_habitantes_municipio(nuevoDataset)
-    #plot_edades_total(nuevoDataset)
-    K_means_Mujeres(nuevoDataset)
-
 def main():
     #system('cls')
     subprocess.call('cls', shell=True)
+
+    print('\n\t\t\t\t\t\tRed Team: B.C. Data Mining Final Project by\n16210971\tGutiérrez Hernández Jennifer Alexa\t\t16210975\tLuna Fuentes Fernando')
     print('\n\nElija una de las siguiente opciones para mostrar\n')
     opcion = input('1- Gráfica Habitantes por Municipio\t\t\t\t\t2- Gráfica de Sexo por municipio\n3- Gráfica entre edades y población en BC\t\t\t'
             '4- Gráfica poblacional de hombres y su edad\n5- Gráfica poblacional de hombres y su edad\t\t\t6- Salir'
@@ -277,69 +275,5 @@ def main():
     else:
         print('Error Opción Invalida, intente de nuevo.')
 
-#if __name__ == "__main__":
- #   main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    #   ================================================== Prubas de codigo e ideas ==================================================
-    #   ===============================================================================================================================
-    """
-    def tester(equipo):
-        a,s,d = (equipo[0],equipo[1], equipo[2])
-        return a,s,d
-
-    team = ['Adrian','Gabriel','Jesus']
-    a,s,d = tester(team)
-    print(a,s,d)
-    """
-
-    #       ver las 3 listas de columnas
-    #for values in izip(x, y1, y2):
-    #    print(values)
-
-    # test = nuevoDataset.groupby('Dimension').describe()
-    # test.to_csv('purbas.csv')
-    # print(nuevoDataset.groupby('Dimension').max())
-    # print(nuevoDataset.chunksize())
-
-    """def plot_sexo_municipio(df):
-        df = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
-        df = df.drop(['Estado','Edades','Estimador','Poblacion Total'], axis=1)
-        df['%Hombres'] = (df['Hombres'] / (df['Hombres'] + df['Mujeres'])) * 100
-        df['%Mujeres'] = (df['Mujeres'] / (df['Hombres'] + df['Mujeres'])) * 100
-        x, y1, y2 = (df['Dimension'], df['%Hombres'], df['%Mujeres'])
-        #return x, y1, y2
-        #df = pd.DataFrame( { 'Hombres':y1,'Mujeres':y2 }, index=x )
-        #barras = df.plot.bar(rot=0)
-        ind = np.arange(5)
-        ind2 = df['Dimension']
-        width = 0.50
-        fig = plt.figure()
-        ax = fig.add_axes([0.1, 0.1, 0.78, 0.78])
-        ax.bar(ind2, y1, width, color='cornflowerblue')
-        ax.bar(ind2, y2, width, bottom=y1, color='pink')
-        ax.set_ylabel('Porcentaje por Sexo')
-        ax.set_xlabel('Municipios de Baja California')
-        ax.set_title('Composicion por Municipio segun su Sexo')
-        #ax.set_xticks(ind2, ('G1', 'G2', 'G3', 'G4', 'G5'))
-        ax.set_yticks(np.arange(0, 110, 10))
-        ax.legend(labels=['Hombres', 'Mujeres'])
-
-        for numeros in zip(x,y1,y2):
-            print(numeros)
-        plt.show()"""
+if __name__ == "__main__":
+    main()
