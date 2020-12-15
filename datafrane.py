@@ -61,8 +61,10 @@ class Dataframe():
         df['Edades'] = df['Edades'].str.replace('75 años y más', '16')
         df['Edades'] = df['Edades'].str.replace('No especificado', '0')
         df['Edades'] = df['Edades'].str.replace('Total', '17')
+
         #       Convertir columna Edades a tipo Entero
         df['Edades'] = df['Edades'].astype(int)
+
         #       Guardar a CSV
         df.to_csv('poblacion_ciudades.csv', index=False)
         df = pd.read_csv('poblacion_ciudades.csv')
@@ -73,6 +75,7 @@ class Dataframe():
         ciudades = df.loc[(~df['Dimension'].str.contains('Total')) & (df['Edades'] == 17)]
         a = (ciudades['Poblacion Total'])
         b = (ciudades['Dimension'])
+
         #       Haciendo el Plot
         plt.figure('Gráfica: Habitantes por Municipio')
         plt.pie(a, labels=b, autopct="%0.1f %%", startangle=140)
@@ -92,11 +95,13 @@ class Dataframe():
         X = np.arange(5)
         pl.bar(X, +y1, color='cornflowerblue', edgecolor='white')
         pl.bar(X, -y2, color='pink', edgecolor='white')
+
         #       Desplega porcentajes para Hombres y Mujeres
         for x, y in zip(X, y1):
             pl.text(x + 0.1, y + 0.025, '%.2f ' % y + '%', ha='center', va='bottom')
         for x, y in zip(X, y2):
             pl.text(x + 0.1, -y + 0.025, '%.2f' % y + '%', ha='center', va='top')
+
         #       Opciones de desplegado y PLOT
         pl.title('Composición por Municipio segun su Sexo')
         pl.legend(labels=['Hombres', 'Mujeres'])
