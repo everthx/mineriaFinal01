@@ -2,7 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import pylab as pl
-from sklearn import preprocessing
 from sklearn.cluster import KMeans
 
 import subprocess
@@ -138,44 +137,26 @@ class Dataframe():
         df = df.loc[(~df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17) & ~(df['Edades'] == 0)]
         df = df.drop(['Estado', 'Dimension', 'Estimador', 'Poblacion Total','Mujeres'], axis=1)
 
-        # Normalización de los datos
-        """min_max_scaler = preprocessing.MinMaxScaler()
-        df = min_max_scaler.fit_transform(df)
-        df = pd.DataFrame(df)  # Hay que convertir a DF el resultado.
-        df = df.rename(columns={0: 'Edades', 1: 'Hombres'})
-        #print(df)"""
-
         # Representación gráfica de los datos.
         x = df['Hombres'].values
         y = df['Edades'].values
         plt.figure('Gráfica: K-Means Población de Hombres conforme a las Edades', figsize=(10, 7))
-        #plt.scatter(x, y, s=5)
-        #plt.yticks(y, ["0-04", "05-09", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49",
-          #             "50-54", "55-59", "60-64", "65-69", "70-74", "75-más"])
+
         plt.xlabel('Hombres')
         plt.ylabel('Edades')
         plt.title('Población de Hombres conforme a las Edades')
-        #plt.plot(x, y, 'o', markersize=1)
-        #plt.show()
 
         # Determinar el número óptimo de clústeres
-        nc = range(1, 30)  # El número de iteraciones que queremos hacer.
-        kmeans = [KMeans(n_clusters=i) for i in nc]
-        score = [kmeans[i].fit(df).score(df) for i in range(len(kmeans))]
         plt.xlabel('Número de clústeres (k)')
         plt.ylabel('Suma de los errores cuadráticos')
-        #plt.plot(nc, score)
-        #plt.show()
 
         # Aplicación de k-means con k = 3
         kmeans = KMeans(n_clusters=3).fit(df)
         centroids = kmeans.cluster_centers_
-        #print(centroids)
 
         # Etiquetado de datos.
         labels = kmeans.predict(df) # Asignar cada registro de nuestro dataset a uno de los clústers
         df['label'] = labels
-        #print(df)
 
         # Representación gráfica de los clústeres k-means.
         colores = ['red', 'green', 'blue','yellow']
@@ -196,13 +177,6 @@ class Dataframe():
         df = df.loc[(~df['Dimension'].str.contains('Total')) & ~(df['Edades'] == 17) & ~(df['Edades'] == 0)]
         df = df.drop(['Estado', 'Dimension', 'Estimador', 'Poblacion Total','Hombres'], axis=1)
 
-        # Normalización de los datos
-        """min_max_scaler = preprocessing.MinMaxScaler()
-        df = min_max_scaler.fit_transform(df)
-        df = pd.DataFrame(df)  # Hay que convertir a DF el resultado.
-        df = df.rename(columns={0: 'Edades', 1: 'Mujeres'})"""
-        #print(df)
-
         # Representación gráfica de los datos.
         x = df['Mujeres'].values
         y = df['Edades'].values
@@ -211,8 +185,6 @@ class Dataframe():
         plt.xlabel('Mujeres')
         plt.ylabel('Edades')
         plt.title('Población de Mujeres conforme a las Edades')
-        #plt.plot(x, y, 'o', markersize=1)
-        #plt.show()
 
         # Determinar el número óptimo de clústeres
         nc = range(1, 30)  # El número de iteraciones que queremos hacer.
@@ -220,18 +192,14 @@ class Dataframe():
         score = [kmeans[i].fit(df).score(df) for i in range(len(kmeans))]
         plt.xlabel('Número de clústeres (k)')
         plt.ylabel('Suma de los errores cuadráticos')
-        #plt.plot(nc, score)
-        #plt.show()
 
         # Aplicación de k-means con k = 5
         kmeans = KMeans(n_clusters=3).fit(df)
         centroids = kmeans.cluster_centers_
-        #print(centroids)
 
         # Etiquetado de datos.
         labels = kmeans.predict(df) # Asignar cada registro de nuestro dataset a uno de los clústers
         df['label'] = labels
-        #print(df)
 
         # Representación gráfica de los clústeres k-means.
         colores = ['red', 'green', 'blue']
