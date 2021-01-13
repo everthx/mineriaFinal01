@@ -255,8 +255,7 @@ def main():
     #system('cls')
     subprocess.call('cls', shell=True)
 
-    print('\n\t\t\t\t\t\tRed Team: B.C. Data Mining Final Project by\n16210971\tGutiérrez Hernández Jennifer Alexa\t\t16210975\tLuna Fuentes Fernando')
-    print('\n\nElija una de las siguiente opciones para mostrar\n')
+    print('\n\t\t\t\t\t\tBlack Team: Estadistica y Analisis de Datos: Proyecto Final')
     opcion = input('1- Gráfica Habitantes por Municipio\t\t\t\t\t2- Gráfica de Sexo por municipio\n3- Gráfica entre edades y población en BC\t\t\t'
             '4- Gráfica poblacional de hombres y su edad\n5- Gráfica poblacional de hombres y su edad\t\t\t6- Salir'
                    '\n\n::')
