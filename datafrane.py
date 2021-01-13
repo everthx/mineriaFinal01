@@ -226,7 +226,7 @@ def main():
     print('\n\t\t\t\t\t\tBlack Team: Proyecto Final de Estadística y Análisis de Datos')
     print('\n\nElija una de las siguiente opciones para mostrar\n')
     opcion = input('1- Gráfica Habitantes por Municipio\t\t\t\t\t2- Gráfica de Sexo por municipio\n3- Gráfica entre edades y población en BC\t\t\t'
-            '4- Gráfica poblacional de hombres y su edad\n5- Gráfica poblacional de hombres y su edad\t\t\t6- Salir'
+            '4- Gráfica poblacional de hombres y su edad\n5- Gráfica poblacional de Mujeres y su edad\t\t\t6- Salir'
                    '\n\n::')
     if(opcion == '1'):
         Dataframe.plot_habitantes_municipio(nuevoDataset)
